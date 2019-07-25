@@ -15,7 +15,6 @@
     "trailing-comma": [false],
     "jsx-wrap-multiline": false,
     "jsx-no-multiline-js": false,
-    "no-index-in-import": true,
     "react-hooks-nesting": "error"
   }
 }
