@@ -2,8 +2,8 @@
   "name": "react-ssi-fragment",
   "version": "1.0.1",
   "description": "React component for rendering Server Side Includes. For using with MicroFrontend services. ",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/SSIFragment.js",
+  "types": "lib/SSIFragment.d.ts",
   "author": "Daniel Bolivar <daniel.bolivar@holidaycheck.com>",
   "license": "MIT",
   "scripts": {
