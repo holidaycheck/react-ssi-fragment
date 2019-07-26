@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "amd",
     "moduleResolution": "node",
     "target": "es5",
     "outDir": "lib",
+    "outFile": "./lib/index.js",
     "strict": true,
     "declaration": true,
     "noUnusedLocals": true,
