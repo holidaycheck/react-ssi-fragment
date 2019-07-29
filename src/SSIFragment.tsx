@@ -1,60 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-interface SSIFragmentProps {
-  isOnClient?: boolean;
-  id: string;
-  url: string;
-}
-
-const createSSITag = (url: string) => `<!--#include virtual="${url}" -->`;
-
-const getInitialHtml = (id: string, defaultHtml: string, isOnClient?: boolean): string => {
-  if (isOnClient && window) {
-    const element = window.document.getElementById(id);
-
-    return element ? element.innerHTML : defaultHtml;
-  }
-
-  return defaultHtml;
-};
-
-const fetch = (url: string) => {
-  return new Promise((resolve, reject) => {
-    const xhr = new (window as any).XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onload = () => resolve(xhr.response);
-    xhr.onerror = () => reject(new Error(`Failed to load ${url}. Got status ${xhr.status}.`));
-    xhr.send();
-  });
-};
-
-const isFallbackNecessary = (url: string, initialHtml: string) => createSSITag(url) === initialHtml;
-
-const remountScripts = (id: string) => {
-  const document = window.document;
-  if (document) {
-    const element = document.getElementById(id);
-    if (element) {
-      element.querySelectorAll('script').forEach(script => {
-        const newScript = document.createElement('script');
-        if (script.src) {
-          if(script.getAttribute("type")) {
-            newScript.setAttribute("type", script.getAttribute("type") || "");
-          }
-          if(script.getAttribute("noModule")) {
-            newScript.setAttribute("noModule", script.getAttribute("noModule") || "");
-          }
-          newScript.setAttribute("defer", "");
-          newScript.setAttribute("async", "");
-          newScript.src = script.src;
-        } else {
-          newScript.textContent = script.textContent;
-        }
-        document.body.appendChild(newScript);
-      });
-    }
-  }
-};
+import { ownFetch, getInitialHtml, createSSITag, isFallbackNecessary, remountScripts } from './utils';
+import { SSIFragmentProps } from './types';
 
 const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispatch<string>) => {
   // tslint:disable-next-line: no-console
@@ -62,7 +8,7 @@ const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispa
     `Server Side Include of fragment ${id} with url ${url} did not work, falling back to client side include.`,
   );
 
-  fetch(url)
+  ownFetch(url)
     .then(
       fallbackHtml =>
         new Promise(resolve => {
