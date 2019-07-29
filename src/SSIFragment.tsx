@@ -38,6 +38,14 @@ const remountScripts = (id: string) => {
       element.querySelectorAll('script').forEach(script => {
         const newScript = document.createElement('script');
         if (script.src) {
+          if(script.getAttribute("type")) {
+            newScript.setAttribute("type", script.getAttribute("type") || "");
+          }
+          if(script.getAttribute("noModule")) {
+            newScript.setAttribute("noModule", script.getAttribute("noModule") || "");
+          }
+          newScript.setAttribute("defer", "");
+          newScript.setAttribute("async", "");
           newScript.src = script.src;
         } else {
           newScript.textContent = script.textContent;
