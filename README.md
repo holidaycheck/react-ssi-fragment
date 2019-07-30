@@ -19,7 +19,7 @@ The component is meant to be used alongside Server Side Rendering (SSR from now 
 ### On the Server
 
 ```
-import { SSIFragment } from '/react-ssi-fragment';
+import { SSIFragment } from 'react-ssi-fragment';
 
 const Component = () => (
   <SSIFragment
@@ -33,7 +33,7 @@ const Component = () => (
 ### On the Client
 
 ```
-import { SSIFragment } from '/react-ssi-fragment';
+import { SSIFragment } from 'react-ssi-fragment';
 
 const Component = () => (
   <SSIFragment
@@ -43,6 +43,10 @@ const Component = () => (
   />
 )
 ```
+
+## Class Component
+
+If for any reason you need a class component and not the hook based implementation, you can use `import { SSIFragment } from 'react-ssi-fragment/lib/SSIFragmentClass'`
 
 ## Usage with Typescript
 
