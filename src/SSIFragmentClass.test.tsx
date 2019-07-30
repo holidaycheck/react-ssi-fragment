@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { SSIFragmentClass } from './SSIFragmentClass';
+import { SSIFragment } from './SSIFragmentClass';
 
 const createXHR = () => {
   return {

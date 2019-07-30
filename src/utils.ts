@@ -36,7 +36,6 @@ export const remountScripts = (id: string) => {
           if (script.getAttribute('noModule')) {
             newScript.setAttribute('noModule', script.getAttribute('noModule') || '');
           }
-          newScript.async = false;
           newScript.src = script.src;
         } else {
           newScript.textContent = script.textContent;
