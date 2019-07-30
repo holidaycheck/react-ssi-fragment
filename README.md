@@ -46,7 +46,7 @@ const Component = () => (
 
 ## Class Component
 
-If for any reason you need a class component and not the hook based implementation, you can use `import { SSIFragment } from 'react-ssi-fragment/lib/SSIFragmentClass'`
+If for any reason you need a class component and not the hook based implementation, you can use `import { SSIFragmentClass } from 'react-ssi-fragment/lib/SSIFragmentClass'`
 
 ## Usage with Typescript
 

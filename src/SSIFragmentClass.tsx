@@ -2,7 +2,7 @@ import React from 'react';
 import { ownFetch, getInitialHtml, createSSITag, isFallbackNecessary, remountScripts } from './utils';
 import { SSIFragmentProps, SSIFragmentState } from './types';
 
-export class SSIFragment extends React.PureComponent<SSIFragmentProps, SSIFragmentState> {
+export class SSIFragmentClass extends React.PureComponent<SSIFragmentProps, SSIFragmentState> {
   private initialHtml = '';
 
   constructor(props: SSIFragmentProps) {
