@@ -15,7 +15,8 @@ const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispa
           setFallbackHtml(fallbackHtml as string);
           if (typeof onReady !== 'undefined') {
             onReady();
-            console.error('onReady was fired after htmlFallback');
+            // tslint:disable-next-line: no-console
+            console.log('onReady was fired after htmlFallback');
           }
           resolve();
         }),
@@ -33,7 +34,8 @@ export const SSIFragment = (props: SSIFragmentProps) => {
       fetchFallbackHtml(props.id, props.url, setFallbackHtml, props.onReady);
     } else if (typeof props.onReady !== 'undefined') {
       props.onReady();
-      console.error('onReady was fired after nonFallback mount');
+      // tslint:disable-next-line: no-console
+      console.log('onReady was fired after nonFallback mount');
     }
     if (fallbackHtml !== '') {
       remountScripts(props.id);
