@@ -1,6 +1,6 @@
 // tslint:disable: no-console
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 
 import { SSIFragment } from './SSIFragment';
 
@@ -18,7 +18,14 @@ const mockWindow = (xhr, getElementById = createGetElementById()) => {
   Object.defineProperty(window.document, 'getElementById', { writable: true, value: getElementById });
 };
 
+const unMockWindow = (initialXhr, initialGetElementById) => {
+  (window as any).XMLHttpRequest = initialXhr;
+  Object.defineProperty(window.document, 'getElementById', { writable: true, value: initialGetElementById });
+};
+
 describe('SSIFragment Component', () => {
+  const initialGetElementById = window.document.getElementById;
+  const initialXhr = window.XMLHttpRequest;
   let consoleError;
 
   beforeEach(() => {
@@ -27,7 +34,9 @@ describe('SSIFragment Component', () => {
   });
 
   afterEach(() => {
+    cleanup();
     console.error = consoleError;
+    unMockWindow(initialXhr, initialGetElementById);
   });
 
   it('should render the SSI', () => {
@@ -83,6 +92,41 @@ describe('SSIFragment Component', () => {
 
     return new Promise(setImmediate).then(() => {
       expect(containerWithId.innerHTML).toBe('');
+    });
+  });
+
+  it('should call the onReady callback of the SSI', () => {
+    const onReady = jest.fn();
+    const xhr = createXHR();
+    const getElementById = jest.fn().mockReturnValueOnce({ innerHTML: 'foo' });
+    mockWindow(xhr, getElementById);
+    render(<SSIFragment id="the-id" url="/the-url" isOnClient={true} onReady={onReady} />);
+
+    expect(onReady).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call the onReady callback after fetching the html fallback', done => {
+    const onReady = jest.fn();
+    const xhr = createXHR();
+    mockWindow(xhr);
+
+    const { container } = render(<SSIFragment id="the-id" url="/the-url" isOnClient={true} onReady={onReady} />);
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          id="the-id"
+        />
+      </div>
+    `);
+
+    (xhr as any).status = 200;
+    (xhr as any).response = '<div>Foo</div>';
+    (xhr as any).onload();
+
+    return new Promise(setImmediate).then(() => {
+      expect(onReady).toHaveBeenCalled();
+      done();
     });
   });
 });

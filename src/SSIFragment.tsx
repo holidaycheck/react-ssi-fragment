@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ownFetch, getInitialHtml, createSSITag, isFallbackNecessary, remountScripts } from './utils';
 import { SSIFragmentProps } from './types';
 
-const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispatch<string>) => {
+const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispatch<string>, onReady?: () => void) => {
   // tslint:disable-next-line: no-console
   console.error(
     `Server Side Include of fragment ${id} with url ${url} did not work, falling back to client side include.`,
@@ -13,6 +13,9 @@ const fetchFallbackHtml = (id: string, url: string, setFallbackHtml: React.Dispa
       fallbackHtml =>
         new Promise(resolve => {
           setFallbackHtml(fallbackHtml as string);
+          if (typeof onReady !== 'undefined') {
+            onReady();
+          }
           resolve();
         }),
     )
@@ -26,7 +29,9 @@ export const SSIFragment = (props: SSIFragmentProps) => {
 
   useEffect(() => {
     if (isFallbackNecessary(props.url, initialHtml) && props.isOnClient && fallbackHtml === '') {
-      fetchFallbackHtml(props.id, props.url, setFallbackHtml);
+      fetchFallbackHtml(props.id, props.url, setFallbackHtml, props.onReady);
+    } else if (typeof props.onReady !== 'undefined') {
+      props.onReady();
     }
     if (fallbackHtml !== '') {
       remountScripts(props.id);
