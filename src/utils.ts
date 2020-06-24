@@ -34,9 +34,7 @@ export const remountScripts = (id: string) => {
             newScript.setAttribute('type', script.getAttribute('type') || '');
           }
           if (script.getAttribute('nomodule') !== null) {
-            console.log('nomodule', script);
             newScript.setAttribute('nomodule', script.getAttribute('nomodule') || '');
-            console.log('newScript', newScript);
           }
           newScript.src = script.src;
         } else {
