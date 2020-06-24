@@ -27,14 +27,14 @@ export const remountScripts = (id: string) => {
   if (document) {
     const element = document.getElementById(id);
     if (element) {
-      Array.prototype.slice.call(element.querySelectorAll('script'), 0).forEach(script => {
+      Array.prototype.slice.call(element.querySelectorAll('script'), 0).forEach((script) => {
         const newScript = document.createElement('script');
         if (script.src) {
           if (script.getAttribute('type')) {
             newScript.setAttribute('type', script.getAttribute('type') || '');
           }
-          if (script.getAttribute('noModule')) {
-            newScript.setAttribute('noModule', script.getAttribute('noModule') || '');
+          if (script.getAttribute('nomodule')) {
+            newScript.setAttribute('nomodule', script.getAttribute('nomodule') || '');
           }
           newScript.src = script.src;
         } else {
