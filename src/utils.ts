@@ -11,9 +11,20 @@ export const getInitialHtml = (id: string, defaultHtml: string, isOnClient?: boo
 };
 
 export const ownFetch = (url: string) => {
+let basicAuthHeader: any
+try {
+  const { origin, username, password, pathname } = new URL(url)
+  if(username && password) {
+    url = `${origin}${pathname}`
+    basicAuthHeader = {key: 'Authorization', value: 'Basic ' + btoa(username + ':' + password)}
+  }
+} catch {}
+
   return new Promise((resolve, reject) => {
     const xhr = new (window as any).XMLHttpRequest();
     xhr.open('GET', url);
+    if(basicAuthHeader)
+      xhr.setRequestHeader(basicAuthHeader.key, basicAuthHeader.value)
     xhr.onload = () => resolve(xhr.response);
     xhr.onerror = () => reject(new Error(`Failed to load ${url}. Got status ${xhr.status}.`));
     xhr.send();
