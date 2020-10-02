@@ -1,10 +1,18 @@
 {
   "name": "react-ssi-fragment",
-  "version": "2.1.6",
-  "description": "React component for rendering Server Side Includes. For using with MicroFrontend services. ",
+  "version": "2.1.7",
+  "description": "React component for rendering Server Side Includes. For using with MicroFrontend services.",
   "main": "lib/SSIFragment.js",
   "types": "lib/types.d.ts",
   "author": "Daniel Bolivar <daniel.bolivar@holidaycheck.com>",
+  "contributors": [
+    {
+      "name": "Gzim Helshani"
+    },
+    {
+      "name": "Dibran Isufi"
+    }
+  ],
   "license": "MIT",
   "scripts": {
     "prepublishOnly": "npm run build",
@@ -41,10 +49,5 @@
     "tslint-react-hooks": "^2.2.1",
     "typescript": "^3.5.3",
     "typescript-tslint-plugin": "^0.5.4"
-  },
-  "files": [
-    "lib/types.d.ts",
-    "lib/SSIFragment.js",
-    "lib/utils.js"
-  ]
+  }
 }
