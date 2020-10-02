@@ -49,5 +49,10 @@
     "tslint-react-hooks": "^2.2.1",
     "typescript": "^3.5.3",
     "typescript-tslint-plugin": "^0.5.4"
-  }
+  },
+  "files": [
+    "lib/types.d.ts",
+    "lib/SSIFragment.js",
+    "lib/utils.js"
+  ]
 }
